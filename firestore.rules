@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (request.auth.token.role == 'admin' ||
+         request.auth.token.email == 'askaman.italia@gmail.com');
+    }
+
+    function isOperator() {
+      return isAuthenticated() && request.auth.token.role == 'operator';
+    }
+
+    // 1. users: lettura/scrittura solo owner
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // 2. operators: lettura pubblica dei campi profilo; scrittura solo owner e admin
+    match /operators/{operatorId} {
+      allow read: if true; // Pubblico per permettere l'esplorazione dei 10 slot
+      allow write: if isOwner(operatorId) || isAdmin();
+    }
+
+    // 3. calls: lettura solo owner (proprio lato: cliente o operatore) e admin
+    match /calls/{callId} {
+      allow read: if isAuthenticated() &&
+        (resource.data.userId == request.auth.uid ||
+         resource.data.operatorId == request.auth.uid ||
+         isAdmin());
+      allow write: if isAdmin(); // Solo backend/admin crea e aggiorna le chiamate
+    }
+
+    // 4. transactions: lettura solo owner (proprio lato) e admin
+    match /transactions/{transactionId} {
+      allow read: if isAuthenticated() &&
+        (resource.data.userId == request.auth.uid || isAdmin());
+      allow write: if isAdmin(); // Solo webhook Stripe server-side scrive transazioni
+    }
+
+    // 5. operatorApplications: scrittura solo owner, lettura solo admin
+    match /operatorApplications/{applicationId} {
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow read: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // 6. complianceLogs: scrittura solo owner operator, lettura solo admin
+    match /complianceLogs/{logId} {
+      allow create: if isAuthenticated() && request.resource.data.operatorUid == request.auth.uid;
+      allow read: if isAdmin();
+      allow update, delete: if false; // I log di compliance sono immutabili per audit trail
+    }
+  }
+}

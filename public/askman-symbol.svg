@@ -1,0 +1,71 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(-145, -125)">
+    <!-- Upper Bubble & Face Profile -->
+    <path
+      d="M 180 435
+         L 180 205
+         C 180 165 205 140 245 140
+         L 410 140
+         C 455 140 485 165 498 200
+         C 504 218 502 238 498 252
+         C 496 258 493 263 492 268
+         L 528 306
+         C 506 312 496 317 496 324
+         C 502 328 506 332 503 337
+         C 499 340 494 342 494 345
+         C 498 348 501 352 499 356
+         C 492 360 488 364 489 369
+         C 496 380 514 388 516 402
+         C 516 418 496 438 480 448
+         C 470 455 460 466 455 480"
+      stroke="#0E2038"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Bottom Pointer & Lower Edge -->
+    <path
+      d="M 180 425
+         L 180 450
+         L 158 508
+         L 225 465
+         L 330 465"
+      stroke="#0E2038"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Collar Arc Under Neck -->
+    <path
+      d="M 370 432
+         C 385 470 422 485 455 475"
+      stroke="#0E2038"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Inside Question Mark Hook -->
+    <path
+      d="M 288 276
+         C 288 232 320 216 345 216
+         C 378 216 402 238 402 272
+         C 402 305 372 324 350 348
+         L 350 376"
+      stroke="#0E2038"
+      stroke-width="24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Question Mark Dot -->
+    <circle
+      cx="350"
+      cy="420"
+      r="13.919999999999998"
+      fill="#0E2038"
+    />
+  </g>
+</svg>
