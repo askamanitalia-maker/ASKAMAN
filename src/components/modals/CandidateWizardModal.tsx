@@ -27,7 +27,7 @@ const SCREENING_QUESTIONS = [
     question: 'Una cliente ti propone un aperitivo dal vivo.',
     options: [
       { text: 'Rifiuto: nessun incontro è consentito.', isCorrect: true, rule: '' },
-      { text: 'Accetto solo in un luogo pubblico affollato.', isCorrect: false, rule: 'Regola #1 violata: AskAMan NON è dating. Qualsiasi incontro fisico comporta ban immediato.' },
+      { text: 'Accetto solo in un luogo pubblico affollato.', isCorrect: false, rule: 'Regola #1 violata: Ask A Man NON è dating. Qualsiasi incontro fisico comporta ban immediato.' },
       { text: 'Dico che ne possiamo riparlare quando non sarò più operatore.', isCorrect: false, rule: 'Regola #1 violata: La violazione dei confini professionali è permanente.' }
     ]
   },
@@ -78,21 +78,21 @@ export const CandidateWizardModal: React.FC = () => {
     // Validation per step
     if (step === 1) {
       if (!formData.name.trim() || !formData.phone.trim() || !formData.age.trim()) {
-        alert('Compila tutti i campi anagrafici.');
+        setScreeningError('Compila tutti i campi anagrafici.');
         return;
       }
     }
 
     if (step === 2) {
       if (formData.relationalExperience.trim().length < 40) {
-        alert('Inserisci una descrizione narrativa della tua esperienza di vita (almeno 40 caratteri).');
+        setScreeningError('Inserisci una descrizione narrativa della tua esperienza di vita (almeno 40 caratteri).');
         return;
       }
     }
 
     if (step === 3) {
       if (formData.selfDescription.trim().length < 30) {
-        alert('Inserisci un autodescrizione sintetica in 3 righe.');
+        setScreeningError('Inserisci un autodescrizione sintetica in 3 righe.');
         return;
       }
     }
@@ -110,14 +110,14 @@ export const CandidateWizardModal: React.FC = () => {
       }
 
       if (!q1Passed || !q2Passed || !q3Passed || !q4Passed) {
-        setScreeningError('Screening NON superato: tutte e 4 le risposte devono essere corrette (4/4). Rileggi le regole ferree di AskAMan.');
+        setScreeningError('Screening NON superato: tutte e 4 le risposte devono essere corrette (4/4). Rileggi le regole ferree di Ask A Man.');
         return;
       }
     }
 
     if (step === 5) {
       if (!formData.acceptedCodeOfConduct || !formData.acceptedPrivacy || !formData.acceptedSplit || !formData.acceptedBanPolicy) {
-        alert('Devi accettare tutte le clausole obbligatorie per continuare.');
+        setScreeningError('Devi accettare tutte le clausole obbligatorie per continuare.');
         return;
       }
     }

@@ -6,6 +6,8 @@ export interface User {
   createdAt: string;
   creditsMinutes: number;
   hasUsedFreeTrial: boolean;
+  freeTrialSessionsLeft?: number; // 2 sessioni da 5 minuti per testare 2 operatori live (5+5 free)
+  isRegistered: boolean; // il microfono si attiva solo dopo registrazione e richiesta call
   isFounder: boolean; // Prezzo bloccato 12 mesi a €1/min per chi si registra nei primi 6 mesi
   role: UserRole;
   name?: string;
@@ -55,7 +57,7 @@ export interface Transaction {
   stripeSessionId: string;
   amountEUR: number;
   minutesAdded: number;
-  packId: 'starter_pack' | 'pack_10' | 'pack_30' | 'pack_60';
+  packId: 'pack_free_5_5' | 'pack_10' | 'pack_20' | 'pack_30' | 'starter_pack' | 'pack_60' | string;
   createdAt: string;
 }
 
@@ -97,7 +99,7 @@ export interface ComplianceLog {
 }
 
 export interface CreditPack {
-  id: 'starter_pack' | 'pack_10' | 'pack_30' | 'pack_60';
+  id: 'pack_free_5_5' | 'pack_10' | 'pack_20' | 'pack_30' | 'starter_pack' | 'pack_60' | string;
   name: string;
   minutes: number;
   priceEUR: number;

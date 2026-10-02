@@ -6,8 +6,31 @@ import { CreditPack } from '../../types';
 import { CtaButton } from '../common/CtaButton';
 
 export const StripeCheckoutModal: React.FC = () => {
-  const { isStripeModalOpen, setIsStripeModalOpen, buyCreditPack, currentUser } = useApp();
-  const [selectedPack, setSelectedPack] = useState<CreditPack>(CREDIT_PACKS[0]);
+  const {
+    isStripeModalOpen,
+    setIsStripeModalOpen,
+    buyCreditPack,
+    currentUser,
+    selectedPackIdForStripe
+  } = useApp();
+
+  const paidPacks = CREDIT_PACKS.filter(p => p.priceEUR > 0);
+
+  const [selectedPack, setSelectedPack] = useState<CreditPack>(() => {
+    if (selectedPackIdForStripe) {
+      const match = paidPacks.find(p => p.id === selectedPackIdForStripe);
+      if (match) return match;
+    }
+    return paidPacks[0] || CREDIT_PACKS[1];
+  });
+
+  // Sync when selectedPackIdForStripe changes
+  React.useEffect(() => {
+    if (selectedPackIdForStripe) {
+      const match = paidPacks.find(p => p.id === selectedPackIdForStripe);
+      if (match) setSelectedPack(match);
+    }
+  }, [selectedPackIdForStripe]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -76,8 +99,8 @@ export const StripeCheckoutModal: React.FC = () => {
             )}
 
             {/* Pack choices */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {CREDIT_PACKS.map(pack => {
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {paidPacks.map(pack => {
                 const isSelected = selectedPack.id === pack.id;
                 const pricePerMin = (pack.priceEUR / pack.minutes).toFixed(2);
 

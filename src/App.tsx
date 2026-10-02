@@ -10,9 +10,12 @@ import { DashboardPage } from './pages/DashboardPage';
 import { OperatorLoginPage } from './pages/OperatorLoginPage';
 import { OperatorDashboardPage } from './pages/OperatorDashboardPage';
 import { AdminPage } from './pages/AdminPage';
+import { PricingPage } from './pages/PricingPage';
+import { FaqPage } from './pages/FaqPage';
 import { StripeCheckoutModal } from './components/modals/StripeCheckoutModal';
 import { CallModal } from './components/modals/CallModal';
 import { CandidateWizardModal } from './components/modals/CandidateWizardModal';
+import { RegistrationModal } from './components/modals/RegistrationModal';
 import { Operator } from './types';
 
 function MainRouter() {
@@ -57,6 +60,12 @@ function MainRouter() {
         />
       );
     }
+    if (currentPath === '/pricing') {
+      return <PricingPage onNavigate={navigate} />;
+    }
+    if (currentPath === '/faq') {
+      return <FaqPage onNavigate={navigate} />;
+    }
     if (currentPath.startsWith('/operators/')) {
       const id = currentPath.split('/operators/')[1];
       return <OperatorDetailPage operatorId={id} onNavigate={navigate} />;
@@ -85,6 +94,7 @@ function MainRouter() {
       <Footer onNavigate={navigate} />
 
       {/* Global Interactive Modals */}
+      <RegistrationModal />
       <StripeCheckoutModal />
       <CallModal />
       <CandidateWizardModal />

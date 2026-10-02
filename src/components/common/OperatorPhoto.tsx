@@ -51,14 +51,14 @@ export const OperatorPhoto: React.FC<OperatorPhotoProps> = ({
         {!unlockedByConsent && (
           <div
             className="absolute inset-0 bg-[#6B7A99]/70 backdrop-blur-sm flex flex-col items-center justify-center p-2 text-center select-none"
-            title="Foto offuscata per tutela della riservatezza dell'operatore. Lo sblocco avviene solo previo suo esplicito consenso, mai tramite pagamento."
+            title="Foto appositamente oscurata per neutralità e riservatezza. Sarà visibile solo alla 5ª chiamata con questo operatore. Scambio contatti non consentito (possibile solo dopo 15 chiamate)."
           >
             <div className="w-8 h-8 rounded-full bg-[#14213D]/60 flex items-center justify-center border border-[#F6F1E7]/30 shadow-xs">
               <Lock size={lockSizes[size]} className="text-[#F6F1E7]" strokeWidth={2.2} />
             </div>
             {size === 'xl' || size === 'lg' ? (
               <span className="text-[11px] text-[#F6F1E7] font-medium mt-2 leading-tight px-2 drop-shadow-sm">
-                Riservatezza operatore
+                Oscurata fino alla 5ª chiamata
               </span>
             ) : null}
           </div>

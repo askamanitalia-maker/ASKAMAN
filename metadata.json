@@ -1,6 +1,6 @@
 {
-  "name": "AskAMan",
-  "description": "Marketplace di conversazioni telefoniche informali per ottenere un punto di vista maschile su relazioni, comportamenti e vita quotidiana.",
+  "name": "Ask A Man",
+  "description": "Ask A Man — Marketplace di conversazioni telefoniche informali per ottenere un punto di vista maschile su relazioni, comportamenti e vita quotidiana.",
   "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

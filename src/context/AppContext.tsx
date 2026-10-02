@@ -34,8 +34,11 @@ interface AppContextType {
     durationSeconds: number;
     isFreeTrial: boolean;
     isMuted: boolean;
+    status: 'ready' | 'connecting' | 'connected';
   } | null;
-  startCall: (operator: Operator) => { success: boolean; message?: string };
+  startCall: (operator: Operator) => { success: boolean; requireRegistration?: boolean; message?: string };
+  connectCall: () => void;
+  cancelCall: () => void;
   endCall: () => void;
   toggleCallMute: () => void;
   buyCreditPack: (pack: CreditPack) => void;
@@ -47,26 +50,32 @@ interface AppContextType {
   recordComplianceAcknowledgment: (operatorUid: string) => void;
   isStripeModalOpen: boolean;
   setIsStripeModalOpen: (open: boolean) => void;
+  selectedPackIdForStripe: string | null;
+  openStripeModalWithPack: (packId: string) => void;
   isCandidateModalOpen: boolean;
   setIsCandidateModalOpen: (open: boolean) => void;
+  isRegistrationModalOpen: boolean;
+  setIsRegistrationModalOpen: (open: boolean) => void;
   selectedOperatorForCall: Operator | null;
   setSelectedOperatorForCall: (op: Operator | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_KEY = 'askaman_app_state_v3';
+const LOCAL_STORAGE_KEY = 'askaman_app_state_v4';
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Current user state: default to a new client who gets 10 minutes free trial!
+  // Current user state: default to a new client with 5+5 free trial (2 sessioni da 5 minuti)
   const [currentUser, setCurrentUser] = useState<User>(() => {
     return {
       uid: 'usr_silvia_demo',
       phone: '+39 347 882 1920',
       createdAt: '2026-09-01T10:00:00Z',
-      creditsMinutes: 10, // 10 minuti di benvenuto gratis
+      creditsMinutes: 10, // 5+5 minuti di benvenuto
       hasUsedFreeTrial: false,
-      isFounder: true, // Prezzo bloccato 12 mesi a €1/min
+      freeTrialSessionsLeft: 2, // 2 sessioni live da 5 min ciascuna per testare 2 operatori
+      isRegistered: true, // utente registrato per la demo, modificabile al logout/switch
+      isFounder: true, // Prezzo bloccato 12 mesi
       role: 'user',
       name: 'Elena F.'
     };
@@ -93,12 +102,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     durationSeconds: number;
     isFreeTrial: boolean;
     isMuted: boolean;
+    status: 'ready' | 'connecting' | 'connected';
   } | null>(null);
 
   // Modals state
   const [isStripeModalOpen, setIsStripeModalOpen] = useState(false);
+  const [selectedPackIdForStripe, setSelectedPackIdForStripe] = useState<string | null>(null);
   const [isCandidateModalOpen, setIsCandidateModalOpen] = useState(false);
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
   const [selectedOperatorForCall, setSelectedOperatorForCall] = useState<Operator | null>(null);
+
+  const openStripeModalWithPack = (packId: string) => {
+    setSelectedPackIdForStripe(packId);
+    setIsStripeModalOpen(true);
+  };
 
   // Load from local storage if available
   useEffect(() => {
@@ -129,18 +146,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [operators, calls, transactions, applications, complianceLogs]);
 
-  // Active call timer interval
+  // Active call timer interval - only runs when call is explicitly CONNECTED
   useEffect(() => {
-    if (!activeCall) return;
+    if (!activeCall || activeCall.status !== 'connected') return;
 
     const interval = setInterval(() => {
       setActiveCall(prev => {
-        if (!prev) return null;
+        if (!prev || prev.status !== 'connected') return prev;
         const newDuration = prev.durationSeconds + 1;
         const currentMinutesUsed = Math.ceil(newDuration / 60);
 
         // Max minutes allowed for this call
-        const maxMinutesAllowed = prev.isFreeTrial ? 10 : currentUser.creditsMinutes;
+        const maxMinutesAllowed = prev.isFreeTrial ? 5 : currentUser.creditsMinutes;
 
         // Hard stop a credito esaurito
         if (currentMinutesUsed > maxMinutesAllowed) {
@@ -159,7 +176,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [activeCall, currentUser.creditsMinutes]);
+  }, [activeCall?.status, currentUser.creditsMinutes]);
 
   const loginUser = (phone: string, isOperator: boolean = false) => {
     if (isOperator) {
@@ -170,31 +187,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         createdAt: '2026-08-10T12:00:00Z',
         creditsMinutes: 0,
         hasUsedFreeTrial: true,
+        freeTrialSessionsLeft: 0,
+        isRegistered: true,
         isFounder: false,
         role: 'operator',
         name: 'Stefano M. (Operatore)'
       });
     } else {
       setCurrentRole('user');
-      setCurrentUser({
+      setCurrentUser(prev => ({
+        ...prev,
         uid: 'usr_' + Date.now().toString(36),
         phone,
         createdAt: new Date().toISOString(),
-        creditsMinutes: 10,
-        hasUsedFreeTrial: false,
+        creditsMinutes: prev.creditsMinutes || 10,
+        hasUsedFreeTrial: prev.hasUsedFreeTrial || false,
+        freeTrialSessionsLeft: prev.freeTrialSessionsLeft !== undefined ? prev.freeTrialSessionsLeft : 2,
+        isRegistered: true,
         isFounder: true,
         role: 'user',
         name: 'Utente Verificata'
-      });
+      }));
     }
   };
 
   const logout = () => {
     setCurrentRole('user');
+    setCurrentUser(prev => ({
+      ...prev,
+      isRegistered: false,
+      name: 'Ospite'
+    }));
   };
 
   const startCall = (operator: Operator) => {
-    const isFreeTrial = !currentUser.hasUsedFreeTrial;
+    // 1) Verifica registrazione utente
+    if (!currentUser.isRegistered) {
+      setSelectedOperatorForCall(operator);
+      setIsRegistrationModalOpen(true);
+      return {
+        success: false,
+        requireRegistration: true,
+        message: 'La linea telefonica si attiva dopo la registrazione gratuita e la richiesta di call con l\'operatore.'
+      };
+    }
+
+    // 2) Verifica sessione 5+5 free trial o crediti disponibili
+    const isFreeTrial = !currentUser.hasUsedFreeTrial && (currentUser.freeTrialSessionsLeft ?? 2) > 0;
     if (!isFreeTrial && currentUser.creditsMinutes < 1) {
       setIsStripeModalOpen(true);
       return {
@@ -203,19 +242,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       };
     }
 
+    // Apre solo l'interfaccia del telefono con status 'ready'. La chiamata NON è partita finché l'utente non clicca sul telefono!
     setActiveCall({
       operator,
-      startTime: Date.now(),
+      startTime: 0,
       durationSeconds: 0,
       isFreeTrial,
-      isMuted: false
+      isMuted: false,
+      status: 'ready'
     });
     setSelectedOperatorForCall(operator);
     return { success: true };
   };
 
+  const connectCall = () => {
+    if (!activeCall || activeCall.status !== 'ready') return;
+    setActiveCall(prev => (prev ? { ...prev, status: 'connecting' } : null));
+
+    // Breve connessione realistica al centralino Twilio protetto e avvio effettivo della chiamata
+    setTimeout(() => {
+      setActiveCall(prev => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          startTime: Date.now(),
+          durationSeconds: 0,
+          status: 'connected'
+        };
+      });
+    }, 1100);
+  };
+
+  const cancelCall = () => {
+    if (!activeCall) return;
+    if (activeCall.status !== 'connected') {
+      setActiveCall(null);
+      return;
+    }
+    endCall();
+  };
+
   const endCall = () => {
     if (!activeCall) return;
+
+    // Se la chiamata non era connessa o durata 0, chiudi semplicemente l'interfaccia senza addebiti
+    if (activeCall.status !== 'connected' || activeCall.durationSeconds === 0) {
+      setActiveCall(null);
+      return;
+    }
 
     const durationMinutes = Math.max(1, Math.ceil(activeCall.durationSeconds / 60));
     const isFreeTrial = activeCall.isFreeTrial;
@@ -231,7 +305,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       operatorId: activeCall.operator.uid,
       operatorName: activeCall.operator.name,
       status: 'completed',
-      startTime: new Date(activeCall.startTime).toISOString(),
+      startTime: new Date(activeCall.startTime || Date.now()).toISOString(),
       endTime: new Date().toISOString(),
       durationMinutes,
       totalCost,
@@ -242,12 +316,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     setCalls(prev => [newCall, ...prev]);
 
-    // Update user credits
+    // Update user credits & trial sessions
     setCurrentUser(prev => {
       if (isFreeTrial) {
+        const remainingSessions = Math.max(0, (prev.freeTrialSessionsLeft ?? 2) - 1);
         return {
           ...prev,
-          hasUsedFreeTrial: true,
+          freeTrialSessionsLeft: remainingSessions,
+          hasUsedFreeTrial: remainingSessions === 0,
           creditsMinutes: Math.max(0, prev.creditsMinutes - durationMinutes)
         };
       }
@@ -320,7 +396,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
 
     if (nextAvailableSlot === -1) {
-      alert('Tutti i 10 slot operatore sono attualmente occupati.');
+      console.warn('Tutti i 10 slot operatore sono attualmente occupati.');
       return;
     }
 
@@ -344,7 +420,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       totalCalls: 0,
       status: 'online',
       testimonials: [
-        { text: 'Nuovo operatore verificato e pronto all ascolto.', author: 'AskAMan Team' }
+        { text: 'Nuovo operatore verificato e pronto all ascolto.', author: 'Team Ask A Man' }
       ]
     };
 
@@ -401,6 +477,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         complianceLogs,
         activeCall,
         startCall,
+        connectCall,
+        cancelCall,
         endCall,
         toggleCallMute,
         buyCreditPack,
@@ -412,8 +490,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         recordComplianceAcknowledgment,
         isStripeModalOpen,
         setIsStripeModalOpen,
+        selectedPackIdForStripe,
+        openStripeModalWithPack,
         isCandidateModalOpen,
         setIsCandidateModalOpen,
+        isRegistrationModalOpen,
+        setIsRegistrationModalOpen,
         selectedOperatorForCall,
         setSelectedOperatorForCall
       }}

@@ -18,7 +18,7 @@ export const VerificationBadge: React.FC<VerificationBadgeProps> = ({
   return (
     <span
       className={`inline-flex items-center gap-1 font-semibold rounded-full bg-[#2F6B4F] text-[#F6F1E7] select-none shadow-xs ${sizeClasses} ${className}`}
-      title="Identità e idoneità verificate da AskAMan"
+      title="Identità e idoneità verificate da Ask A Man"
     >
       <Check size={iconSize} strokeWidth={2.8} className="text-[#F6F1E7]" />
       <span>{label}</span>

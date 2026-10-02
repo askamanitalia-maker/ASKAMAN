@@ -4,6 +4,7 @@ import { OperatorPhoto } from '../components/common/OperatorPhoto';
 import { VerificationBadge } from '../components/common/VerificationBadge';
 import { Logo, LogoSymbol, LogoWatermark, LogoBanner } from '../components/common/Logo';
 import { OperatorPhilosophyExplorer } from '../components/landing/OperatorPhilosophyExplorer';
+import { EmpatheticHookSection } from '../components/landing/EmpatheticHookSection';
 import { useApp } from '../context/AppContext';
 import {
   ShieldCheck,
@@ -42,7 +43,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
   };
 
   return (
-    <div className="space-y-24 py-2 relative overflow-hidden">
+    <div className="space-y-12 sm:space-y-16 py-2 relative overflow-hidden">
       {/* TOP ANNOUNCEMENT BANNER */}
       <LogoBanner
         variant="bar"
@@ -51,8 +52,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
       />
 
       {/* HERO SECTION WITH BACKGROUND WATERMARK (FILIGRANA) */}
-      <section className="relative pt-6 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        {/* Central Filigrana (Watermark) of the official AskMan silhouette logo */}
+      <section className="relative pt-4 pb-8 sm:pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        {/* Central Filigrana (Watermark) of the official Ask A Man silhouette logo */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none z-0 overflow-hidden">
           <LogoWatermark
             size={680}
@@ -74,32 +75,27 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
 
         {/* Content Layer (z-10 above watermark) */}
         <div className="relative z-10">
-          {/* Official Logo Banner Badge */}
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/80 border border-[#14213D]/10 text-xs font-bold tracking-wide mb-6 shadow-xs backdrop-blur-xs">
-            <LogoSymbol size={26} strokeColor="#14213D" />
-            <span className="tracking-tight font-extrabold text-sm">
-              <span className="text-[#14213D]">Ask</span>
-              <span className="text-[#E07A5F]">Man</span>
-            </span>
-            <span className="w-1 h-1 rounded-full bg-[#6B7A99]/40" />
-            <span className="text-[#6B7A99] font-medium hidden sm:inline">
-              il punto di vista maschile
-            </span>
-            <span className="px-2 py-0.5 rounded-full bg-[#2F6B4F]/10 text-[#2F6B4F] text-[10px] font-bold uppercase tracking-wider">
-              Ufficiale
-            </span>
+          {/* Official Brand Banner above Hero H1 */}
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="inline-flex items-center justify-center p-2 sm:p-2.5 rounded-2xl bg-white/95 border border-[#14213D]/10 shadow-sm backdrop-blur-xs max-w-xs sm:max-w-md md:max-w-lg transition-transform hover:scale-[1.01]">
+              <img
+                src="/askman-hero-banner.svg"
+                alt="Ask A Man - Il punto di vista maschile"
+                className="w-full h-auto max-h-24 sm:max-h-28 md:max-h-32 object-contain rounded-xl"
+                referrerPolicy="no-referrer"
+              />
+            </div>
           </div>
 
           {/* Hero Title and Subtitle */}
           <div className="space-y-4 max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8532F]/10 text-[#C8532F] border border-[#C8532F]/20 text-xs sm:text-sm font-extrabold uppercase tracking-wider">
-              <span>Punto di Vista Maschile Diretto</span>
-            </div>
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#14213D] tracking-tight leading-[1.08]">
-              Chiedi a chi <br />conosce le risposte
+              Prova a chiederlo <br />a un altro
             </h1>
             <h2 className="text-xl sm:text-2xl font-medium text-[#6B7A99] tracking-tight leading-relaxed max-w-3xl mx-auto">
-              Il punto di vista maschile che ti mancava. Su una nuova città, una scelta di vita, un bivio lavorativo, una dinamica di coppia o un nodo familiare. Senza dating. Senza terapia. Senza&nbsp;giudizi.
+              <span className="block">Il punto di vista maschile che ti mancava.</span>
+              <span className="block">Su una nuova città, una scelta di vita, un bivio lavorativo, una dinamica di coppia o un nodo familiare.</span>
+              <span className="block">Senza dating. Senza terapia. Senza giudizi.</span>
             </h2>
           </div>
 
@@ -109,7 +105,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           </h3>
 
           {/* CTAs */}
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <CtaButton
               size="lg"
               onClick={() => onNavigate('/operators')}
@@ -129,7 +125,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           </div>
 
           {/* Micro guarantees */}
-          <div className="mt-10 pt-6 border-t border-[#14213D]/10 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-semibold text-[#6B7A99]">
+          <div className="mt-6 pt-5 border-t border-[#14213D]/10 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-[#6B7A99]">
             <span className="flex items-center gap-1.5 whitespace-nowrap">
               <CheckCircle2 size={16} className="text-[#2F6B4F] shrink-0" />
               Nessuna carta richiesta per il test
@@ -146,6 +142,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
+      {/* COMPONENTE 1: SEZIONE POST-HERO ("IL GANCIO EMPATICO") */}
+      <EmpatheticHookSection
+        onCtaClick={() => onNavigate('/operators')}
+      />
+
       {/* PROMINENT OFFICIAL BRAND BANNER CARD */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <LogoBanner
@@ -158,12 +159,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
 
       {/* 3 USPs SECTION */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-2 mb-12">
+        <div className="text-center space-y-2 mb-6 sm:mb-8">
           <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
             I tre pilastri del servizio
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#14213D]">
-            Perché parlare con AskAMan
+            Perché parlare con Ask A Man
           </h2>
         </div>
 
@@ -211,13 +212,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* COME FUNZIONA IN 3 STEP */}
-      <section className="relative bg-[#14213D] text-[#F6F1E7] py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative bg-[#14213D] text-[#F6F1E7] py-12 sm:py-14 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Filigrana in trasparenza sul fondo scuro */}
         <div className="absolute right-0 bottom-0 pointer-events-none select-none z-0 translate-x-12 translate-y-12">
           <LogoWatermark size={540} opacity={0.04} color="#F6F1E7" rotation={8} />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto space-y-16">
+        <div className="relative z-10 max-w-7xl mx-auto space-y-10 sm:space-y-12">
           <div className="text-center space-y-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
               Semplicità e riservatezza
@@ -253,8 +254,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
               <div className="text-3xl font-extrabold text-[#E07A5F] font-mono">03</div>
               <h3 className="text-lg font-bold text-[#F6F1E7]">Chiama in&nbsp;sicurezza</h3>
               <p className="text-xs text-[#6B7A99] leading-relaxed">
-                Premi &ldquo;Chiama ora&rdquo;: la connessione si attiva via bridge anonimo. I primi
-                10 minuti sono gratuiti. Poi acquisti solo i minuti che desideri a partire da €5.
+                Premi il tasto rosso &ldquo;Chiama un operatore&rdquo;: appare l&apos;interfaccia telefono e il microfono viene richiesto solo prima di cliccare il pulsante di chiamata. I primi 5+5&apos;&apos; sono gratuiti per testare 2 operatori live.
               </p>
             </div>
           </div>
@@ -268,14 +268,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* OPERATORS PREVIEW GRID */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
               Voci verificate e selezionate
             </span>
             <h2 className="text-3xl font-extrabold text-[#14213D] tracking-tight">
-              Anteprima Operatori AskAMan
+              Anteprima Operatori Ask A Man
             </h2>
           </div>
           <button
@@ -363,9 +363,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
                   onClick={() => {
                     startCall(op);
                   }}
+                  className="bg-[#E07A5F] hover:bg-[#C8532F]"
                 >
                   <PhoneCall size={13} className="mr-1.5" />
-                  Chiama ora
+                  Chiama un operatore
                 </CtaButton>
               </div>
             </div>
@@ -376,40 +377,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
       {/* OPERATOR PHILOSOPHY & INTERACTIVE SELECTION EXPLORER */}
       <OperatorPhilosophyExplorer onNavigate={onNavigate} />
 
-      {/* BRAND BANNER & ASSET IDENTITY SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
-              Identità Visiva & Logo
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#14213D]">
-              Il Logo AskMan nei Formati Banner
-            </h2>
-            <p className="text-xs sm:text-sm text-[#6B7A99] max-w-xl mx-auto">
-              Il marchio unisce la silhouette del volto maschile, il fumetto di ascolto e il punto interrogativo delle risposte che cerchi.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Banner formato Chiaro */}
-            <LogoBanner
-              variant="card"
-              darkTheme={false}
-              onCtaClick={() => onNavigate('/operators')}
-            />
-            {/* Banner formato Scuro */}
-            <LogoBanner
-              variant="card"
-              darkTheme={true}
-              onCtaClick={() => onNavigate('/operators')}
-            />
-          </div>
-        </div>
-      </section>
-
       {/* FAQ SECTION */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
             Domande frequenti
@@ -423,15 +392,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
           {[
             {
               q: 'È un sito di incontri? No.',
-              a: 'Assolutamente no. AskAMan vieta categoricamente qualsiasi proposta di appuntamento o incontro dal vivo. Le chiamate avvengono unicamente tramite un centralino telefonico proxy per garantire l anonimato. Ogni tentativo di scambiare numeri o vedersi comporta il ban immediato dell utente o dell operatore.'
+              a: 'Assolutamente no. Ask A Man vieta categoricamente qualsiasi proposta di appuntamento o incontro dal vivo. Le chiamate avvengono unicamente tramite un centralino telefonico proxy per garantire l anonimato. Ogni tentativo di scambiare numeri o vedersi comporta il ban immediato dell utente o dell operatore.'
             },
             {
               q: 'È terapia o consulenza psicologica? No.',
-              a: 'No. Gli operatori di AskAMan non sono psicologi, medici o consulenti clinici. Offrono uno scambio di conversazione informale e genuino: quello che un amico maschio onesto e maturo ti direbbe a cena, spiegandoti la prospettiva maschile senza finzioni. Se stai vivendo un momento di grave sofferenza, ti invitiamo a rivolgerti a un professionista sanitario o al numero 1522.'
+              a: 'No. Gli operatori di Ask A Man non sono psicologi, medici o consulenti clinici. Offrono uno scambio di conversazione informale e genuino: quello che un amico maschio onesto e maturo ti direbbe a cena, spiegandoti la prospettiva maschile senza finzioni. Se stai vivendo un momento di grave sofferenza, ti invitiamo a rivolgerti a un professionista sanitario o al numero 1522.'
             },
             {
-              q: 'Quanto costa? 10 minuti gratis, poi pacchetti da €5.',
-              a: 'La prima chiamata è completamente gratuita per 10 minuti (basta inserire il numero per ricevere l OTP di verifica). Successivamente puoi acquistare pacchetti trasparenti: Starter Pack da €5 per 30 minuti, pacchetti da 10 minuti (€10), 30 minuti (€27) o 60 minuti (€50). Nessun abbonamento, nessun rinnovo automatico.'
+              q: 'Quanto costa? Prova 5+5\'\' gratis per testare 2 operatori, poi pacchetti da 9€, 16€ e 23€.',
+              a: 'Puoi iniziare subito con la nostra offerta esclusiva 5+5\'\' Free: 5 minuti con un primo operatore e 5 minuti con un secondo operatore diverso per confrontare due punti di vista, senza carta di credito. Successivamente puoi scegliere tra pacchetti trasparenti: 10 minuti (9€), 20 minuti (16€) o 30 minuti (23€). Nessun abbonamento, nessun addebito ricorrente.'
+            },
+            {
+              q: 'Quando viene richiesto di attivare il microfono?',
+              a: 'Non chiediamo mai di attivare il microfono quando accedi al sito o durante la navigazione. Il microfono viene richiesto esclusivamente prima di cliccare il pulsante di chiamata sull\'interfaccia del telefono, dopo che hai cliccato sul tasto per chiamare l\'operatore.'
             },
             {
               q: 'Come viene garantita la privacy della mia voce e del mio numero?',
@@ -466,11 +439,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
             );
           })}
         </div>
+
+        {/* Link to dedicated /faq page */}
+        <div className="text-center pt-2">
+          <button
+            type="button"
+            onClick={() => onNavigate('/faq')}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#14213D]/20 text-[#14213D] hover:bg-[#14213D] hover:text-[#F6F1E7] text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
+          >
+            <span>Apri la Guida FAQ Completa con Ricerca &amp; Sezioni</span>
+            <ArrowRight size={15} />
+          </button>
+        </div>
       </section>
 
       {/* FINAL CALL TO ACTION */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-12">
-        <div className="bg-[#14213D] text-[#F6F1E7] rounded-3xl p-10 sm:p-14 space-y-6 relative overflow-hidden shadow-xl">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pb-6 sm:pb-8">
+        <div className="bg-[#14213D] text-[#F6F1E7] rounded-3xl p-8 sm:p-10 space-y-6 relative overflow-hidden shadow-xl">
           {/* Filigrana in trasparenza nel card CTA */}
           <div className="absolute -left-12 -bottom-12 pointer-events-none select-none z-0">
             <LogoWatermark size={360} opacity={0.06} color="#F6F1E7" rotation={-14} />
@@ -484,7 +469,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
               Hai un dubbio che non riesci a&nbsp;decodificare?
             </h2>
             <p className="text-sm sm:text-base text-[#6B7A99] max-w-xl mx-auto leading-relaxed">
-              Parla con un operatore verificato oggi stesso. I tuoi primi 10&nbsp;minuti sono offerti da&nbsp;AskAMan.
+              Parla con un operatore verificato oggi stesso. I tuoi primi 10&nbsp;minuti sono offerti da&nbsp;Ask A Man.
             </p>
             <div className="pt-2">
               <CtaButton

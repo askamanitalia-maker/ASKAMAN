@@ -37,7 +37,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({ onNavigate }) => {
             <span>Pannello di Controllo & Amministrazione</span>
           </div>
           <h1 className="text-3xl font-extrabold text-[#14213D] tracking-tight">
-            Gestione Marketplace AskAMan
+            Gestione Marketplace Ask A Man
           </h1>
           <p className="text-xs text-[#6B7A99] mt-1">
             Slot occupati: <strong className="text-[#14213D]">{occupiedSlotsCount}/10</strong> • Slot liberi:{' '}

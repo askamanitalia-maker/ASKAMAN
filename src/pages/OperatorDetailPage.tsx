@@ -49,7 +49,7 @@ export const OperatorDetailPage: React.FC<OperatorDetailPageProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
       {/* Back button */}
       <button
         type="button"
@@ -129,15 +129,12 @@ export const OperatorDetailPage: React.FC<OperatorDetailPageProps> = ({
               <CtaButton
                 size="lg"
                 onClick={() => {
-                  const res = startCall(operator);
-                  if (!res.success && res.message) {
-                    alert(res.message);
-                  }
+                  startCall(operator);
                 }}
-                className="w-full sm:w-auto shadow-md"
+                className="w-full sm:w-auto shadow-md bg-[#E07A5F] hover:bg-[#C8532F]"
               >
                 <PhoneCall size={16} className="mr-2" />
-                Chiama ora
+                Chiama un operatore
               </CtaButton>
             )}
 

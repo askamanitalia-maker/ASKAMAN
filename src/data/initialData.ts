@@ -2,36 +2,37 @@ import { Operator, Call, Transaction, OperatorApplication, CreditPack } from '..
 
 export const CREDIT_PACKS: CreditPack[] = [
   {
-    id: 'starter_pack',
-    name: 'Starter Pack',
-    minutes: 30,
-    priceEUR: 5,
-    description: 'Offerta di benvenuto valida 30 giorni. Solo per nuove clienti.',
-    badge: 'Offerta Speciale - Una Tantum',
+    id: 'pack_free_5_5',
+    name: 'Prova 5+5\'\' Free',
+    minutes: 10,
+    priceEUR: 0,
+    description: 'Testa live 2 operatori diversi (5 minuti ciascuno) per confrontare due stili e prospettive maschili autentiche. Nessuna carta di credito richiesta.',
+    badge: '5+5\'\' Free • 2 Operatori Live',
     oneTimeOnly: true
   },
   {
     id: 'pack_10',
     name: 'Pack 10 Minuti',
     minutes: 10,
-    priceEUR: 10,
-    description: 'Ideale per un consiglio rapido e focalizzato su una situazione specifica.'
+    priceEUR: 9,
+    description: 'Ideale per un dubbio mirato, decodificare un messaggio ambiguo o una reazione specifica.',
+    badge: 'Consiglio Rapido'
+  },
+  {
+    id: 'pack_20',
+    name: 'Pack 20 Minuti',
+    minutes: 20,
+    priceEUR: 16,
+    description: 'Il tempo giusto per approfondire una dinamica recente, un litigio o un allontanamento improvviso.',
+    badge: 'Consigliato'
   },
   {
     id: 'pack_30',
     name: 'Pack 30 Minuti',
     minutes: 30,
-    priceEUR: 27,
-    description: 'Il più scelto: spazio per approfondire dinamiche di coppia e messaggi.',
-    badge: 'Risparmi il 10%'
-  },
-  {
-    id: 'pack_60',
-    name: 'Pack 60 Minuti',
-    minutes: 60,
-    priceEUR: 50,
-    description: 'Massima flessibilità da usare in più chiamate quando ne senti il bisogno.',
-    badge: 'Miglior Valore'
+    priceEUR: 23,
+    description: 'Sessione approfondita per analizzare la situazione con calma, capire le reali intenzioni e definire la mossa giusta.',
+    badge: 'Miglior Valore • Più Scelto'
   }
 ];
 
@@ -182,7 +183,7 @@ export const INITIAL_OPERATORS: Operator[] = [
     ageRange: '51 anni',
     region: 'Italia',
     accent: 'Italiano accogliente e misurato',
-    bio: '51 anni. Nuovo operatore in arrivo sulla piattaforma AskAMan. Presto disponibile per sessioni di ascolto riservato, confronto autentico e decodifica dei comportamenti e dei pensieri maschili.',
+    bio: '51 anni. Nuovo operatore in arrivo sulla piattaforma Ask A Man. Presto disponibile per sessioni di ascolto riservato, confronto autentico e decodifica dei comportamenti e dei pensieri maschili.',
     themes: ['Nuovo operatore', 'Prospettiva maschile', 'Esperienza 50+', 'Ascolto e dialogo'],
     audioIntroUrl: 'https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg',
     audioDurationSeconds: 30,
@@ -195,7 +196,7 @@ export const INITIAL_OPERATORS: Operator[] = [
     totalCalls: 0,
     status: 'offline',
     testimonials: [
-      { text: 'Profilo in attivazione. Presto disponibile per le prime chiamate.', author: 'Team AskAMan' }
+      { text: 'Profilo in attivazione. Presto disponibile per le prime chiamate.', author: 'Team Ask A Man' }
     ]
   },
   {
@@ -205,7 +206,7 @@ export const INITIAL_OPERATORS: Operator[] = [
     ageRange: '59 anni',
     region: 'Italia',
     accent: 'Calmo, saggio ed esperto',
-    bio: '59 anni. Nuovo operatore in attivazione su AskAMan. Bagaglio di vita, maturità relazionale e sguardo lucido sulle complessità del mondo maschile.',
+    bio: '59 anni. Nuovo operatore in attivazione su Ask A Man. Bagaglio di vita, maturità relazionale e sguardo lucido sulle complessità del mondo maschile.',
     themes: ['Nuovo operatore', 'Maturità e saggezza', 'Dinamiche di coppia', 'Punto di vista maschile'],
     audioIntroUrl: 'https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg',
     audioDurationSeconds: 30,
@@ -218,7 +219,7 @@ export const INITIAL_OPERATORS: Operator[] = [
     totalCalls: 0,
     status: 'offline',
     testimonials: [
-      { text: 'Profilo in attivazione. Presto disponibile per le prime chiamate.', author: 'Team AskAMan' }
+      { text: 'Profilo in attivazione. Presto disponibile per le prime chiamate.', author: 'Team Ask A Man' }
     ]
   }
   // Slots 8 and 9 are currently empty ("Posizione aperta — Operatore in arrivo") to complete the 10-slot grid

@@ -1,0 +1,21 @@
+# Netlify Configuration for AskAMan Static SPA Deployment
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+# SPA Fallback: Redirect all requests to index.html with 200 HTTP status
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache-Control headers for optimized performance and asset caching
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

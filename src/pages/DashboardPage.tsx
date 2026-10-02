@@ -34,7 +34,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             Area Personale Riservata
           </span>
           <h1 className="text-3xl font-extrabold text-[#14213D] tracking-tight">
-            La tua dashboard AskAMan
+            La tua dashboard Ask A Man
           </h1>
           <p className="text-xs text-[#6B7A99] mt-1">
             Numero verificato: <span className="font-mono text-[#14213D]">{currentUser?.phone}</span>

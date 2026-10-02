@@ -10,7 +10,8 @@ import {
   HeartOff,
   Briefcase,
   Award,
-  PhoneCall
+  PhoneCall,
+  EyeOff
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -23,7 +24,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
   const { setIsCandidateModalOpen } = useApp();
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
       {/* SECTION HEADER & FOUNDATIONAL RULE BANNER */}
       <div className="space-y-6">
         <div className="text-center space-y-3">
@@ -32,7 +33,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
             <span>Trasparenza &amp; Garanzia di Qualità</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#14213D] tracking-tight max-w-3xl mx-auto">
-            Come selezioniamo gli operatori di&nbsp;AskAMan
+            Come selezioniamo gli operatori di&nbsp;Ask A Man
           </h2>
           <p className="text-base sm:text-lg text-[#6B7A99] max-w-2xl mx-auto">
             Nessun profilo improvvisato: solo uomini adulti con percorsi di vita documentabili, sottoposti a rigorose simulazioni vocali prima di essere attivati sulla piattaforma.
@@ -43,7 +44,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
         <div className="bg-[#14213D] text-[#F6F1E7] rounded-2xl p-6 sm:p-8 border border-[#14213D] shadow-sm relative overflow-hidden">
           <div className="relative z-10 max-w-3xl mx-auto text-center space-y-3">
             <span className="text-xs uppercase tracking-widest text-[#E07A5F] font-bold">
-              La Regola Fondamentale di AskAMan
+              La Regola Fondamentale di Ask A Man
             </span>
             <p className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F6F1E7]">
               &ldquo;Non offriamo consulenti professionisti, ma&nbsp;uomini&nbsp;veri.&rdquo;
@@ -56,14 +57,14 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
         </div>
       </div>
 
-      {/* 5 KEY HIGHLIGHTS GRID */}
+      {/* 6 KEY HIGHLIGHTS GRID */}
       <div className="space-y-6">
         <div className="text-center sm:text-left">
           <h3 className="text-xl sm:text-2xl font-extrabold text-[#14213D]">
-            I 5 Pilastri di Selezione degli Operatori
+            I 6 Pilastri di Selezione e Tutela
           </h3>
           <p className="text-xs sm:text-sm text-[#6B7A99]">
-            I requisiti inderogabili verificati su ciascun candidato prima dell&apos;abilitazione.
+            I requisiti inderogabili e le garanzie verificate su ciascun operatore della piattaforma.
           </p>
         </div>
 
@@ -133,7 +134,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
           </div>
 
           {/* Highlight 5 */}
-          <div className="bg-[#F6F1E7] border border-[#14213D]/15 rounded-2xl p-6 space-y-3 hover:border-[#14213D]/40 transition-all shadow-xs md:col-span-2 lg:col-span-2">
+          <div className="bg-[#F6F1E7] border border-[#14213D]/15 rounded-2xl p-6 space-y-3 hover:border-[#14213D]/40 transition-all shadow-xs">
             <div className="w-10 h-10 rounded-xl bg-[#14213D] text-[#E07A5F] flex items-center justify-center">
               <Briefcase size={20} />
             </div>
@@ -145,6 +146,22 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
             </p>
             <p className="text-xs text-[#6B7A99] leading-relaxed">
               Il ventaglio delle tematiche affrontate rispecchia la vita reale: non solo dubbi d&apos;amore o silenzi, ma la gestione di licenziamenti, cambi di residenza o città, accordi genitoriali ed equilibri complessi.
+            </p>
+          </div>
+
+          {/* Highlight 6 */}
+          <div className="bg-[#F6F1E7] border border-[#14213D]/15 rounded-2xl p-6 space-y-3 hover:border-[#14213D]/40 transition-all shadow-xs">
+            <div className="w-10 h-10 rounded-xl bg-[#14213D] text-[#2F6B4F] flex items-center justify-center">
+              <EyeOff size={20} />
+            </div>
+            <h3 className="text-lg font-bold text-[#14213D]">
+              Conoscere il proprio&nbsp;operatore
+            </h3>
+            <p className="text-xs font-semibold text-[#2F6B4F]">
+              Identità tutelata e fiducia&nbsp;graduale.
+            </p>
+            <p className="text-xs text-[#6B7A99] leading-relaxed">
+              Non sono ammessi scambi di contatti privati. L&apos;immagine dell&apos;operatore è appositamente oscurata e sarà visibile solo alla 5ª chiamata. Lo scambio dei contatti può avvenire (non obbligatoriamente) solo dopo 15 chiamate.
             </p>
           </div>
         </div>
@@ -221,7 +238,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
         <div className="pt-4 border-t border-[#14213D]/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs text-[#14213D] font-bold">
             <CheckCircle2 size={16} className="text-[#2F6B4F]" />
-            <span>Processo certificato AskAMan • Zero algoritmi AI, 100% interazione umana autentica</span>
+            <span>Processo certificato Ask A Man • Zero algoritmi AI, 100% interazione umana autentica</span>
           </div>
 
           <button
@@ -286,7 +303,7 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
                   Documento di Trasparenza
                 </span>
                 <h3 className="text-2xl font-extrabold text-[#14213D] tracking-tight">
-                  I Rigorosi Criteri di Selezione di AskAMan
+                  I Rigorosi Criteri di Selezione di Ask A Man
                 </h3>
               </div>
               <button
@@ -324,6 +341,13 @@ export const OperatorPhilosophyExplorer: React.FC<OperatorPhilosophyExplorerProp
                 <h4 className="font-extrabold text-[#14213D]">4. Monitoraggio Anonimo del Feedback</h4>
                 <p className="text-xs text-[#6B7A99]">
                   Dopo ogni chiamata le utenti lasciano una valutazione. Gli operatori che non mantengono una media di recensioni elevata o che ricevono segnalazioni di violazione vengono disattivati all&apos;istante.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[#14213D]/5 border border-[#14213D]/10 space-y-1">
+                <h4 className="font-extrabold text-[#14213D]">5. Conoscere il Proprio Operatore e Sblocco Graduale</h4>
+                <p className="text-xs text-[#6B7A99]">
+                  Non sono ammessi scambi di contatti privati. Per garantire totale neutralità e riservatezza, l&apos;immagine del profilo è oscurata e diventa visibile solo alla 5ª chiamata. L&apos;eventuale scambio di contatti personali può avvenire (in modo non obbligatorio e consensuale) solo dopo 15 chiamate svolte.
                 </p>
               </div>
             </div>

@@ -6,7 +6,7 @@ interface FooterProps {
   onNavigate: (path: string) => void;
 }
 
-export const LEGAL_DISCLAIMER = "AskAMan offre un servizio di conversazione e intrattenimento informale. Gli operatori non sono psicologi, terapeuti o medici. Le opinioni espresse sono personali e non costituiscono parere professionale. È vietato lo scambio di contatti personali e ogni incontro fisico. In caso di crisi o violenza contatta il 1522 o il tuo medico.";
+export const LEGAL_DISCLAIMER = "Ask A Man offre un servizio di conversazione e intrattenimento informale. Gli operatori non sono psicologi, terapeuti o medici. Le opinioni espresse sono personali e non costituiscono parere professionale. È vietato lo scambio di contatti personali e ogni incontro fisico. In caso di crisi o violenza contatta il 1522 o il tuo medico.";
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
@@ -17,7 +17,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Col 1: Brand & Identity */}
           <div className="md:col-span-2 space-y-4">
             <div className="bg-[#F6F1E7] p-3 rounded-xl inline-block">
-              <Logo size="md" showTagline={true} />
+              <Logo size="md" />
             </div>
             <p className="text-[#6B7A99] text-sm max-w-md leading-relaxed">
               Il marketplace italiano di conversazioni telefoniche informali per ottenere
@@ -57,7 +57,28 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('/operators')}
                   className="hover:text-[#E07A5F] transition-colors cursor-pointer"
                 >
-                  Griglia Operatori (10 slot)
+                  Operatori
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('/pricing')}
+                  className="hover:text-[#E07A5F] transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  <span>Tariffe &amp; Prova 5+5&apos;&apos; Free</span>
+                  <span className="text-[10px] bg-[#E07A5F] text-[#F6F1E7] px-1.5 py-0.2 rounded font-bold">
+                    Nuovo
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('/faq')}
+                  className="hover:text-[#E07A5F] transition-colors cursor-pointer"
+                >
+                  Domande Frequenti (FAQ)
                 </button>
               </li>
               <li>
@@ -121,23 +142,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Legal Disclaimer Box - OBLIGATORY EXACT TEXT */}
-        <div className="bg-[#14213D]/90 border border-[#F6F1E7]/15 rounded-xl p-5 relative overflow-hidden">
-          <div className="flex items-start gap-3">
-            <AlertCircle size={18} className="text-[#E07A5F] shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wide text-[#E07A5F]">
-                Avvertenza Legale e Limiti del Servizio
-              </span>
-              <p className="text-xs leading-relaxed text-[#F6F1E7]/90 font-normal">
-                {LEGAL_DISCLAIMER}
-              </p>
+        <div className="bg-[#14213D]/90 border border-[#F6F1E7]/15 rounded-xl p-6 relative overflow-hidden">
+          <div className="flex flex-col items-center justify-center text-center space-y-3 max-w-3xl mx-auto">
+            <div className="inline-flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-wide text-[#E07A5F]">
+              <AlertCircle size={16} className="text-[#E07A5F] shrink-0" />
+              <span>Avvertenza Legale e Limiti del Servizio</span>
+            </div>
+            <div className="text-xs leading-relaxed text-[#F6F1E7]/90 font-normal text-center space-y-1">
+              <p>Ask A Man offre un servizio di conversazione e intrattenimento informale.</p>
+              <p>Gli operatori non sono psicologi, terapeuti o medici.</p>
+              <p>Le opinioni espresse sono personali e non costituiscono parere professionale.</p>
+              <p>È vietato lo scambio di contatti personali e ogni incontro fisico.</p>
+              <p className="text-[#F6F1E7] font-medium">In caso di crisi o violenza contatta il 1522 o il tuo medico.</p>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-[#F6F1E7]/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#6B7A99] gap-4">
-          <p>© {new Date().getFullYear()} AskAMan Italia. Tutti i diritti riservati. P.IVA IT09182370129.</p>
+          <p>© {new Date().getFullYear()} Ask A Man Italia. Tutti i diritti riservati. P.IVA IT09182370129.</p>
           <div className="flex items-center space-x-6">
             <span className="hover:text-[#E07A5F] cursor-pointer">Termini di Servizio</span>
             <span className="hover:text-[#E07A5F] cursor-pointer">Privacy & Cookie Policy</span>

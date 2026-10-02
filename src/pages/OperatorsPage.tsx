@@ -54,20 +54,20 @@ export const OperatorsPage: React.FC<OperatorsPageProps> = ({
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
       {/* Top Title & Context banner */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#14213D]/10 pb-6">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#C8532F]">
-            <span>Chiedi a chi conosce le risposte</span>
+            <span>Prova a chiederlo a un altro</span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#C8532F]"></span>
             <span>10 Slot Esclusivi</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#14213D] tracking-tight">
-            Gli Operatori di AskAMan
+            Gli Operatori di Ask A Man
           </h1>
           <p className="text-sm text-[#6B7A99] max-w-2xl">
-            Chiedi a chi conosce le risposte: operatori selezionati per offrirti il punto di vista maschile autentico,
+            Prova a chiederlo a un altro: operatori selezionati per offrirti il punto di vista maschile autentico,
             senza filtri e senza giudizi. Chiamate dirette, riservate e protette dal nostro centralino vocale anonimo.
           </p>
         </div>
@@ -246,14 +246,12 @@ export const OperatorsPage: React.FC<OperatorsPageProps> = ({
                       <CtaButton
                         size="sm"
                         onClick={() => {
-                          const res = startCall(operator);
-                          if (!res.success && res.message) {
-                            alert(res.message);
-                          }
+                          startCall(operator);
                         }}
+                        className="bg-[#E07A5F] hover:bg-[#C8532F]"
                       >
                         <PhoneCall size={13} className="mr-1.5" />
-                        Chiama ora
+                        Chiama un operatore
                       </CtaButton>
                     )}
                   </div>
